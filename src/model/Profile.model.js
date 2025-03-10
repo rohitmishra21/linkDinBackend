@@ -3,41 +3,53 @@ const mongoose = require("mongoose")
 
 const contactSchema = mongoose.Schema({
     number: {
-        type: Number
+        type: Number,
+        default: 1234567890
     },
     address: {
-        type: String
-    },
-    email: {
         type: String,
-        match: [/^\S+@\S+\.\S+$/, 'Please enter a valid email address']
+        default: "xyz"
     },
     birthDay: {
-        type: String
+        type: String,
+        default: "DOB"
     }
 }, { timestamps: true })
 
 const profileSchema = mongoose.Schema({
+    userId: {
+        type: mongoose.Schema.Types.ObjectId,
+        required: true,
+        ref: 'User'
+    },
     backGroundImg: {
         type: String,
         default: "https://thingscareerrelated.com/wp-content/uploads/2021/10/default-background-image.png"
     },
     profileImg: {
         type: String,
-        default: "https://media.licdn.com/dms/image/v2/D4E12AQEud3Ll5MI7cQ/article-inline_image-shrink_1500_2232/article-inline_image-shrink_1500_2232/0/1660833954461?e=1746662400&v=beta&t=XlitujQ34BooVaQhNl1iMyAeKnNl5qoddLztuBpk6XA"
+        default: "https://images.unsplash.com/photo-1706696951106-b400c3808043?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1yZWxhdGVkfDV8fHxlbnwwfHx8fHw%3D"
     },
     hedline: {
         type: [String],
+        default: "headline"
     },
     about: {
         type: String,
-        maxLength: [200, "Abour must be less than 200 characters"]
+        maxLength: [200, "Abour must be less than 200 characters"],
+        default: "write somting about you for grow your network"
     },
     post: {
-        type: String
+        type: String,
+        default: "post"
     },
     skills: {
-        type: String
+        type: String,
+        default: "skills"
+    },
+    gender: {
+        type: String,
+        default: "male, felmale,other"
     },
     contact: contactSchema
 

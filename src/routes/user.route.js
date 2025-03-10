@@ -5,6 +5,7 @@ const bycrpt = require("bcrypt")
 const validator = require("validator")
 const jwt = require("jsonwebtoken");
 const auth = require("../middleware/auth");
+const profileModel = require("../model/Profile.model");
 
 // signUp api
 userRoute.post("/signUp", async (req, res) => {
@@ -23,8 +24,14 @@ userRoute.post("/signUp", async (req, res) => {
       password: hashPassword
     })
 
-    const token = jwt.sign({ id: user._id }, "linkdin")
+    await profileModel.create({
+      userId: user._id,
+      contact: { email: user.email }
+    })
+
+    const token = await jwt.sign({ id: user._id }, "linkdin")
     res.cookie("token", token)
+
     res.send(user)
   } catch (err) {
     if (err.name === "ValidationError") {
